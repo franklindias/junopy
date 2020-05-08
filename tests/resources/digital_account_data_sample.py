@@ -1,12 +1,12 @@
 DIGITAL_ACCOUNT = {
-    "type": "RECEIVING",
+    "type": "PAYMENT",
     "name": "Franklin Dias",
     "document": "14193049094",
     "email": "email@temp.com",
     "birthDate": "1992-11-11",
     "phone": "84987769392",
     "businessArea": "1000",
-    "businessUrl": "https://www.google.com.br",
+    "linesOfBusiness":"teste",
     "address": {
         "street": "rua teste",
         "number": "100",
@@ -17,7 +17,7 @@ DIGITAL_ACCOUNT = {
     },
     "bankAccount": {
         "bankNumber": "001",
-        "agencyNumber": "123",
+        "agencyNumber": "12345",
         "accountNumber": "123",
         "accountType": "CHECKING",
         "accountHolder": {

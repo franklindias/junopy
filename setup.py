@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
 requires = [i.strip() for i in open('requirements.txt').readlines()]
 
 setuptools.setup(
-    name='python-juno',
+    name='junopy',
     version='1.0.0',
     description='Python Library to JUNO Payments.',
     long_description=long_description,
