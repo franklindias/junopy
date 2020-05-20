@@ -3,9 +3,9 @@ from junopy.utils import get, put, post, delete
 
 BASE_MODEL_URL = '/documents'
 
-def list():
+def list(resource_token):
     url = f'{BASE_MODEL_URL}'
-    return get(url)
+    return get(url, resource_token=resource_token)
 
 def detail(document_id):
     return get(f'{BASE_MODEL_URL}/{document_id}')

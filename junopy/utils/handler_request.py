@@ -72,18 +72,18 @@ def refresh_authentication():
     TOKEN = response.json().get('access_token', None)
 
 
-def get(end_point, params = {}, resend=False):
+def get(end_point, resource_token=None, params = {}, resend=False):
     url = f'{BASE_URL}{end_point}'
     junopy_response = requests.get(url, params=params, headers=get_headers())
 
     if junopy_response.status_code in [403, 401] and not resend:
         refresh_authentication()
-        return get(end_point, params, resend=True)
+        return get(end_point, resource_token, params, resend=True)
     
     return validate_response(junopy_response)
 
 
-def post(end_point, data = {}, files = {}, resend=False):
+def post(end_point, resource_token=None, data = {}, files = {}, resend=False):
     url = f'{BASE_URL}{end_point}'
     if files:
         junopy_response = requests.post(url, data=data, files=files)
@@ -92,12 +92,12 @@ def post(end_point, data = {}, files = {}, resend=False):
     
     if junopy_response.status_code in [403, 401] and not resend:
         refresh_authentication()
-        return post(end_point, data, files, resend=True)
+        return post(end_point, resource_token, data, files, resend=True)
     
     return validate_response(junopy_response)
 
 
-def put(end_point, data = {}, files = {}, resend=False):
+def put(end_point, resource_token=None, data = {}, files = {}, resend=False):
     url = f'{BASE_URL}{end_point}'
     if files:
         junopy_response = requests.put(url, data=data, files=files)
@@ -106,12 +106,12 @@ def put(end_point, data = {}, files = {}, resend=False):
     
     if junopy_response.status_code in [403, 401] and not resend:
         refresh_authentication()
-        return put(end_point, data, files, resend=True)
+        return put(end_point, resource_token, data, files, resend=True)
     
     return validate_response(junopy_response)
 
 
-def patch(end_point, data = {}, files = {}, resend=False):
+def patch(end_point, resource_token=None, data = {}, files = {}, resend=False):
     url = f'{BASE_URL}{end_point}'
     if files:
         junopy_response = requests.patch(url, data=data, files=files)
@@ -120,18 +120,18 @@ def patch(end_point, data = {}, files = {}, resend=False):
     
     if junopy_response.status_code in [403, 401] and not resend:
         refresh_authentication()
-        return patch(end_point, data, files, resend=True)
+        return patch(end_point, resource_token, data, files, resend=True)
     
     return validate_response(junopy_response)
 
 
-def delete(end_point, resend=False):
+def delete(end_point, resource_token=None, resend=False):
     url = f'{BASE_URL}{end_point}'
     junopy_response = requests.delete(url, headers=get_headers())
     
     if junopy_response.status_code in [403, 401] and not resend:
         refresh_authentication()
-        return delete(end_point, resend=True)
+        return delete(end_point, resource_token, resend=True)
     
     return validate_response(junopy_response)
 
@@ -144,7 +144,7 @@ def error(junopy_response):
     raise Exception(error_response)
 
 
-def get_headers():
+def get_headers(resource_token=None):
     header = {
         'X-Api-Version': '2',
         'Content-Type': 'application/json;charset=UTF-8'
@@ -155,5 +155,8 @@ def get_headers():
 
     if RESOURCE_TOKEN:
         header['X-Resource-Token'] = RESOURCE_TOKEN
-    
+
+    if resource_token:
+        header['X-Resource-Token'] = resource_token
+        
     return header
