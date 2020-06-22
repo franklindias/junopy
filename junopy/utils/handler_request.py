@@ -153,10 +153,11 @@ def get_headers(resource_token=None):
     if TOKEN:
         header['Authorization'] = f'Bearer {TOKEN}'
 
-    if RESOURCE_TOKEN:
-        header['X-Resource-Token'] = RESOURCE_TOKEN
-
     if resource_token:
         header['X-Resource-Token'] = resource_token
+
+    elif RESOURCE_TOKEN:
+        header['X-Resource-Token'] = RESOURCE_TOKEN
+
         
     return header
